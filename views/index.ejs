@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title: "URL Shortener" }) %>
+  <body class="bg-black text-white min-h-screen flex flex-col items-center justify-start p-8">
+    <h1 class="text-3xl font-bold mb-6 text-center">URL Shortener</h1>
+
+    <form action="/shorten" method="POST" class="w-full max-w-lg bg-gray-900 p-6 rounded-2xl shadow-lg mb-8">
+      <label class="block mb-2 text-sm font-medium text-gray-300">Enter a long URL</label>
+      <input 
+        type="url" 
+        name="originalUrl" 
+        required 
+        placeholder="https://example.com/very/long/link"
+        class="w-full p-2 mb-4 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-purple-500"
+      />
+      <button 
+        type="submit"
+        class="w-full py-2 bg-purple-600 hover:bg-purple-700 rounded font-semibold transition-colors"
+      >
+        Shorten URL
+      </button>
+    </form>
+
+    <% if (urls && urls.length > 0) { %>
+      <div class="w-full max-w-2xl bg-gray-900 p-6 rounded-2xl shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Your Shortened Links</h2>
+        <ul class="space-y-3">
+          <% urls.forEach(link => { %>
+            <li class="flex justify-between items-center bg-gray-800 p-3 rounded">
+              <div class="flex flex-col">
+                <a href="<%= link.originalUrl %>" target="_blank" class="text-sm text-gray-400 truncate"><%= link.originalUrl %></a>
+                <a href="/<%= link.shortId %>" target="_blank" class="text-purple-400 font-semibold">
+                  <%= requestHost %>/<%= link.shortId %>
+                </a>
+              </div>
+              <button 
+                onclick="navigator.clipboard.writeText('<%= requestHost %>/<%= link.shortId %>')" 
+                class="text-xs px-3 py-1 bg-purple-700 hover:bg-purple-800 rounded"
+              >
+                Copy
+              </button>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    <% } else { %>
+      <p class="text-gray-500 text-sm text-center mt-4">No shortened links yet.</p>
+    <% } %>
+  </body>
+</html>
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head", { title: "Sign In" }) %>
+  <body class="bg-black text-white flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-sm bg-gray-900 p-8 rounded-2xl shadow-lg">
+      <h1 class="text-2xl font-semibold mb-6 text-center">Sign In</h1>
+       <h3 class="text-md font-semibold text-center text-red-500"><%= message %></h3>
+      <form action="http://localhost:5500/api/v1/sign-in" method="POST" class="space-y-4">
+        <div>
+          <label class="block mb-1 text-sm">Email</label>
+          <input type="email" name="email" required
+            class="w-full p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-purple-500">
+        </div>
+        <div>
+          <label class="block mb-1 text-sm">Password</label>
+          <input type="password" name="password" required
+            class="w-full p-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-purple-500">
+        </div>
+        <button type="submit"
+          class="w-full py-2 bg-purple-600 hover:bg-purple-700 rounded font-semibold">Sign In</button>
+      </form>
+      <p class="text-sm text-gray-400 mt-4 text-center">
+        Forgot password?
+        <a href="http://localhost:5500/api/v1/forgot-password" class="text-purple-400 hover:underline">Forgot Password</a>
+        Or Don't have an account?
+        <a href="http://localhost:5500/api/v1/sign-up" class="text-purple-400 hover:underline">Sign Up</a>
+      </p>
+    </div>
+  </body>
+</html>
+

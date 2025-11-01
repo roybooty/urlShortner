@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Verify OTP</title>
+  </head>
+  <body class="bg-black flex items-center justify-center h-screen text-white">
+    <form action="http://localhost:5500/api/v1/verify-otp" method="POST" class="bg-gray-900 p-8 rounded-2xl w-96 shadow-lg">
+      <h1 class="text-2xl font-bold mb-6 text-center">Verify OTP</h1>
+      <% if (message) { %>
+        <p class="text-red-400 text-sm mb-4"><%= message %></p>
+      <% } %>
+      <input type="hidden" name="email" value="<%= email %>" />
+      <input
+        type="text"
+        name="otp"
+        placeholder="Enter 6-digit OTP"
+        class="w-full p-3 rounded bg-gray-800 text-white focus:outline-none mb-4"
+        required
+      />
+      <button class="w-full bg-indigo-600 hover:bg-indigo-700 p-3 rounded font-semibold">Verify</button>
+    </form>
+  </body>
+</html>
+
