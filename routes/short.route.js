@@ -1,14 +1,10 @@
 import { Router } from "express";
-import {
-  shortRender,
-  createShort,
-  goShort,
-} from "../controllers/short.controller.js";
+import { shortRender, createShort } from "../controllers/short.controller.js";
+import authorize from "../middleware/auth.js";
 
 const shortRouter = Router();
 
-shortRouter.get("/short", shortRender);
-shortRouter.post("/short", createShort);
-shortRouter.get("/:code", goShort);
+shortRouter.get("/short", authorize, shortRender);
+shortRouter.post("/short", authorize, createShort);
 
 export default shortRouter;

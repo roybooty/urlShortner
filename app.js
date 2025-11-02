@@ -5,6 +5,8 @@ import connectToDb from "./database/connection.js";
 import authRouter from "./routes/auth.route.js";
 import shortRouter from "./routes/short.route.js";
 import passRouter from "./routes/password.route.js";
+import Url from "./models/Url.js";
+import client from "./config/redis.js";
 
 const app = express();
 
@@ -22,6 +24,21 @@ app.set("views", "./views");
 
 app.get("/", (req, res) => {
   res.redirect("/api/v1/sign-up");
+});
+
+app.get("/:code", async (req, res) => {
+  try {
+    const shortUrl = req.params.code;
+
+    const val = await client.get("shortUrl");
+    if (val) return res.redirect(val);
+
+    const data = await Url.findOne({ shortUrl });
+
+    res.redirect(data.originalUrl);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app.listen(PORT, async () => {

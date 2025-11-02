@@ -37,6 +37,12 @@ export const SignIn = async (req, res) => {
       expiresIn: "1d",
     });
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV == "production",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     if (existingUser && isPassword) {
       try {
         let isReturning = true;
@@ -46,7 +52,7 @@ export const SignIn = async (req, res) => {
       }
     }
 
-    res.status(200).redirect("/api/v1/short");
+    res.status(200).redirect(`/api/v1/short/`);
   } catch (e) {
     res.status(e.statusCode || 500).render("signin.ejs", { message: e });
   }
@@ -71,6 +77,12 @@ export const SignUp = async (req, res) => {
       expiresIn: "1d",
     });
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV == "production",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     if (user) {
       try {
         await message(name, email, NewBoy);
@@ -79,7 +91,7 @@ export const SignUp = async (req, res) => {
       }
     }
 
-    res.status(200).redirect("/api/v1/short");
+    res.status(200).redirect(`/api/v1/short`);
   } catch (e) {
     res.status(e.statusCode || 500).render("signup.ejs", { message: e });
   }
