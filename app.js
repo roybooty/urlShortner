@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.redirect("/api/v1/sign-up");
 });
 
-app.get("/:code", async (req, res) => {
+app.get("/short/:code", async (req, res) => {
   try {
     const shortUrl = req.params.code;
 
@@ -39,6 +39,11 @@ app.get("/:code", async (req, res) => {
   } catch (e) {
     console.log(e);
   }
+});
+
+app.post("/signout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("http://localhost:5500/");
 });
 
 app.listen(PORT, async () => {

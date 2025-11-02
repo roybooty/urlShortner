@@ -1,4 +1,3 @@
-import User from "../models/User.js";
 import Url from "../models/Url.js";
 import client from "../config/redis.js";
 import generateShortCode from "../utils/short.js";
@@ -6,13 +5,13 @@ import generateShortCode from "../utils/short.js";
 export const shortRender = async (req, res) => {
   try {
     const data = await Url.find({ userId: req.user.id });
-    console.log(data);
-    res
-      .status(200)
-      .render("index.ejs", { urls: data, requestHost: req.get("host") });
+
+    res.status(200).render("index.ejs", {
+      urls: data,
+      requestHost: `${req.get("host")}/short`,
+    });
   } catch (e) {
     console.error(e);
-    res.status(500).render("index.ejs", { urls: [], requestHost: e });
   }
 };
 
@@ -29,10 +28,18 @@ export const createShort = async (req, res) => {
 
     await client.set("shortUrl", `${data.originalUrl}`);
 
-    res.status(200).render("index.ejs", { urls: [data], requestHost: e });
+    res.redirect("/api/v1/short/");
   } catch (e) {
-    res
-      .status(e.statusCode || 500)
-      .render("index.ejs", { urls: [], requestHost: e });
+    console.log(e);
+  }
+};
+
+export const deleteShort = async (req, res) => {
+  try {
+    const did = await Url.deleteMany({ userId: req.user._id });
+    console.log(did);
+    if (did) return res.redirect("/api/v1/short/");
+  } catch (e) {
+    console.log(e);
   }
 };
