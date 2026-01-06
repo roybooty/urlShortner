@@ -43,7 +43,7 @@ app.get("/short/:code", async (req, res) => {
 
 app.post("/signout", (req, res) => {
   res.clearCookie("token");
-  res.redirect("http://localhost:5500/");
+  res.redirect("https://safwan-ulob.onrender.com/");
 });
 
 app.listen(PORT, async () => {
