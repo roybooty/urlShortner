@@ -25,7 +25,7 @@ export const verifyOtp = async (req, res) => {
     console.log(value);
 
     if (otp == value) {
-      res.redirect("http://localhost:5500/api/v1/reset-password");
+      res.redirect("https://safwan-ulob.onrender.com/api/v1/reset-password");
     }
 
     const err = new Error("OTP not correct");
@@ -61,7 +61,7 @@ export const forgetPassword = async (req, res) => {
       }
     }
 
-    res.redirect("http://localhost:5500/api/v1/verify-otp");
+    res.redirect("https://safwan-ulob.onrender.com/api/v1/verify-otp");
   } catch (e) {
     res
       .status(e.statusCode || 500)
